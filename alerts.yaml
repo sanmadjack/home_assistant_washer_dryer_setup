@@ -1,0 +1,15 @@
+alert:
+  laundry_still_in_waster:
+    name: "Laundry still in washer"
+    message: "Laundry appears to still be in washer"
+    done_message: "Dryer has started, ceasing nagging"
+    entity_id: input_boolean.washer_finished_dryer_not_yet_run
+    state: "on"
+    repeat: 15
+    skip_first: true
+    data:
+      tag: washing-machine
+      actions:
+        - action: "CEASE_WASHER_NAG"
+          title: "Cease nagging"
+    notifiers: notify
