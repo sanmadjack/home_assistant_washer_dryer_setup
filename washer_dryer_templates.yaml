@@ -1,0 +1,35 @@
+binary_sensor:
+  - platform: template
+    sensors:
+      clothes_washer_state:
+        friendly_name: "Clothes washer state"
+        value_template: >-
+          {% set state = states('sensor.washer_plug_energy_power') %}
+          {% if is_number(state) and state | float > 4 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% set state = states('sensor.washer_plug_energy_power') %}
+          {% if is_number(state) and state | float > 4 %}
+            mdi:washing-machine
+          {% else %}
+            mdi:washing-machine-off
+          {% endif %}
+      clothes_dryer_state:
+        friendly_name: "Clothes dryer state"
+        value_template: >-
+          {% set state = states('sensor.dryer_plug_energy_power') %}
+          {% if is_number(state) and state | float > 20 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% set state = states('sensor.dryer_plug_energy_power') %}
+          {% if is_number(state) and state | float > 20 %}
+            mdi:tumble-dryer
+          {% else %}
+            mdi:tumble-dryer-off
+          {% endif %}
