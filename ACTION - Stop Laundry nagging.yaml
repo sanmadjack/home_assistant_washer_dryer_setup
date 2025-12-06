@@ -1,0 +1,14 @@
+alias: ACTION - Stop Laundry nagging
+description: Stops further "put the laundry in the dryer" nag messages
+triggers:
+  - event_type: mobile_app_notification_action
+    event_data:
+      action: CEASE_WASHER_NAG
+    trigger: event
+conditions: []
+actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.washer_finished_dryer_not_yet_run
+    data: {}
+mode: single
