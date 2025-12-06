@@ -1,0 +1,26 @@
+alias: Clothes Dryer Active
+description: ""
+triggers:
+  - type: power
+    device_id: 38ca57cbf5a3ad453d2c52b671a2ed42
+    entity_id: sensor.dryer_plug_energy_power
+    domain: sensor
+    above: 20
+    below: 99999999
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+    trigger: device
+conditions: []
+actions:
+  - data:
+      value: Drying
+    target:
+      entity_id: input_text.clothes_dryer_state
+    action: input_text.set_value
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.washer_finished_dryer_not_yet_run
+    data: {}
+mode: single
