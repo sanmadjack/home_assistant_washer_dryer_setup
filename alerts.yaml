@@ -1,5 +1,5 @@
 alert:
-  laundry_still_in_waster:
+  laundry_still_in_washer:
     name: "Laundry still in washer"
     message: "Laundry appears to still be in washer"
     done_message: "Dryer has started, ceasing nagging"
