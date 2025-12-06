@@ -1,0 +1,30 @@
+alias: Clothes Washer Idle
+description: ""
+triggers:
+  - entity_id:
+      - binary_sensor.clothes_washer_state
+    from: "on"
+    to: "off"
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    trigger: state
+conditions: []
+actions:
+  - data:
+      message: The washing machine is done
+    action: notify.notify
+  - action: tts.speak
+    metadata: {}
+    data:
+      cache: true
+      media_player_entity_id: media_player.laundry_anouncements
+      message: The washing machine is done
+    target:
+      entity_id: tts.home_assistant_cloud
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.washer_finished_dryer_not_yet_run
+    data: {}
+mode: single
