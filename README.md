@@ -8,19 +8,21 @@ This configuration does three things:
 
 ## How to setup:
 
-Buy a device that can monitor the power usage of an outlet. I used Sonoff S31s, and these instructions will assume the same.
+1. Buy a device that can monitor the power usage of an outlet. I used Sonoff S31s, and these instructions will assume the same.
 
-Set up an MQTT broker that Home Assistant supports, I used Mosquito via HA addons. This doc will not cover Mosquito setup.
+2. Set up an MQTT broker that Home Assistant supports, I used Mosquito via HA addons. This doc will not cover Mosquito setup.
 
-Flash the Sonoff S31s with Tasmota, and configure them to connect to the MQTT broker. This doc will not cover flashing or configuring the Tasmotas.
+3. Flash the Sonoff S31s with Tasmota, and configure them to connect to the MQTT broker. This doc will not cover flashing or configuring the Tasmotas.
 
-Create two sensor templates using the code in sensor_templates.yaml. This can go in configuration.yaml, or you can put it in a seperate file and then include it in configuration.yaml. In my setup "sensor.washer_plug_energy_power" and "sensor.dryer_plug_energy_power" are the names of the entities that provide the current power information, update them to match whatever your entities are called.
+4. Create two sensor templates using the code in sensor_templates.yaml. This can go in configuration.yaml, or you can put it in a seperate file and then include it in configuration.yaml. In my setup "sensor.washer_plug_energy_power" and "sensor.dryer_plug_energy_power" are the names of the entities that provide the current power information, update them to match whatever your entities are called. These templates interpret the current power from the S31s and provide a simple "true" or "false" if the power is currently above a certain threshold. For my washer that's 4, and my dryer is 20. You will need to experiment with your equipment to find appropriate values.
 
-These templates interpret the current power from the S31s and provide a simple "true" or "false" if the power is currently above a certain threshold. For my washer that's 4, and my dryer is 20. You will need to experiment with your equipment to find appropriate values.
+5. If you want the switch nags, create the helper input_boolean.washer_finished_dryer_not_yet_run. I used icon mdi:washing-machine-alert, you can use whatever you want.
 
-Create the helper input_boolean.washer_finished_dryer_not_yet_run. I used icon mdi:washing-machine-alert, you can use whatever you want.
+6. If you want the switch nags, add the contents of alerts.yaml to your configuration.yaml, or add it to a seperate yaml file and then include it in your configuration.yaml. It's set to nag every 15 minutes, change the "repeat" value to adjust it.
 
-Create these four automations from the associated yaml files:
+6. Create the automations below as needed.
+
+## Automations
 
 ### Clothes Washer Idle
 This waits for the washer power usage to drop below the amount set in the sensor template for 5 minutes. My washer sometimes likes to dip its power use, and this is the buffer I arrived at to prevent it preemptively sending notifications, experiment and find the right values for you.
@@ -38,7 +40,7 @@ When the condition is met, it sends a notification to our phones that the dryer 
 ### Clothes Dryer Active
 This script is only necessary for the switching nags.
 
-This waits for the dryer state to flip to true for 10 minutes. The dryer also likes to dip it's power us, and this is the buffer I landed on. Once again, experiment to find the right values for your equipment.
+This waits for the dryer state to flip to true for 10 minutes. The dryer also likes to dip it's power use, and this is the buffer I landed on. Once again, experiment to find the right values for your equipment.
 
 When the condition is met, it sets the input_boolean.washer_finished_dryer_not_yet_run to "false". This ceases the switching nagging alerts
 
