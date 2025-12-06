@@ -1,0 +1,26 @@
+alias: Clothes Dryer Idle
+description: ""
+triggers:
+  - entity_id:
+      - binary_sensor.clothes_dryer_state
+    from: "on"
+    to: "off"
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    trigger: state
+conditions: []
+actions:
+  - action: tts.speak
+    metadata: {}
+    data:
+      cache: true
+      media_player_entity_id: media_player.laundry_anouncements
+      message: The clothes dryer is done
+    target:
+      entity_id: tts.home_assistant_cloud
+  - data:
+      message: The clothes dryer is done
+    action: notify.notify
+mode: single
