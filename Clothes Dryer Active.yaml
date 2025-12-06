@@ -1,17 +1,17 @@
 alias: Clothes Dryer Active
 description: ""
 triggers:
-  - type: power
-    device_id: 38ca57cbf5a3ad453d2c52b671a2ed42
-    entity_id: sensor.dryer_plug_energy_power
-    domain: sensor
-    above: 20
-    below: 99999999
+  - trigger: state
+    entity_id:
+      - binary_sensor.clothes_dryer_state
     for:
       hours: 0
       minutes: 10
       seconds: 0
-    trigger: device
+    from:
+      - "off"
+    to:
+      - "on"
 conditions: []
 actions:
   - data:
