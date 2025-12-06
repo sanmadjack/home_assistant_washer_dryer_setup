@@ -1,4 +1,4 @@
-alias: ACTION - Stop Laundry nagging
+alias: ACTION - CEASE_WASHER_NAG
 description: Stops further "put the laundry in the dryer" nag messages
 triggers:
   - event_type: mobile_app_notification_action
