@@ -1,35 +1,32 @@
-binary_sensor:
-  - platform: template
-    sensors:
-      clothes_washer_state:
-        friendly_name: "Clothes washer state"
-        value_template: >-
-          {% set state = states('sensor.washer_plug_energy_power') %}
+template:
+  - binary_sensor:
+      - default_entity_id: binary_sensor.clothes_washer_state
+        icon: "{% set state = states('sensor.washer_plug_energy_power') %}
           {% if is_number(state) and state | float > 4 %}
-            true
+          mdi:washing-machine
           {% else %}
-            false
-          {% endif %}
-        icon_template: >-
-          {% set state = states('sensor.washer_plug_energy_power') %}
+          mdi:washing-machine-off
+          {% endif %}"
+        name: Clothes washer state
+        state: "{% set state = states('sensor.washer_plug_energy_power') %}
           {% if is_number(state) and state | float > 4 %}
-            mdi:washing-machine
+          true
           {% else %}
-            mdi:washing-machine-off
-          {% endif %}
-      clothes_dryer_state:
-        friendly_name: "Clothes dryer state"
-        value_template: >-
-          {% set state = states('sensor.dryer_plug_energy_power') %}
+          false
+          {% endif %}"
+  - binary_sensor:
+      - default_entity_id: binary_sensor.clothes_dryer_state
+        icon: "{% set state = states('sensor.dryer_plug_energy_power') %}
           {% if is_number(state) and state | float > 20 %}
-            true
+          mdi:tumble-dryer
           {% else %}
-            false
-          {% endif %}
-        icon_template: >-
-          {% set state = states('sensor.dryer_plug_energy_power') %}
-          {% if is_number(state) and state | float > 20 %}
-            mdi:tumble-dryer
+          mdi:tumble-dryer-off
+          {% endif %}"
+        name: Clothes dryer state
+        state:
+          "{% set state = states('sensor.dryer_plug_energy_power') %} {% if is_number(state)
+          and state | float > 20 %}
+          true
           {% else %}
-            mdi:tumble-dryer-off
-          {% endif %}
+          false
+          {% endif %}"
